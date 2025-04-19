@@ -9,18 +9,18 @@ I think that install + setup whole dev environment for Ghidra (`Eclipse`, `jdk`,
 
 > [!WARNING]
 > This script only support newer gradle build task of Ghidra (`buildExtension` inside `$GHIDRA_INSTALL_DIR/support/buildExtension.gradle`). So older plugins may not work (or need to update gradle build script).
+
 > This script is just to simplify the process of building Ghidra extensions using Docker. So any bugs related to incompatible gradle version or gradle build script, or API conflict between Ghidra versions and plugins may occur. Then you need to fix them yourself.
 
 > [!NOTE]
 > I've discarded 2 tasks `compileTestJava` and `buildHelp` (because `buildHelp` sometimes may fail on older plugins, and `compileTestJava` may requires `JUnit` (sometimes it could not be found)). Check `Dockerfile`.
 
-Need `docker-buildkit` [Link](https://docs.docker.com/build/buildkit/)
-
+Need `docker-buildkit` [Link](https://docs.docker.com/build/buildkit/) and `git` + `unzip` + `wget` or `curl`.
 
 Open `build.sh`, then edit 2 vars:
 
-- `GHIDRA_RELEASE_PACKAGE_LINK`: The link to download ghidra release
-- `GHIDRA_EXTENSION_REPO_LINK`: The link to repo of ghidra extension to clone
+- `GHIDRA_RELEASE_PACKAGE_LINK`: The link to download ghidra release, get from [Ghidra Release](https://github.com/NationalSecurityAgency/ghidra/releases). The URL must be valid and point to a valid ghidra release package, end with `.zip`.
+- `GHIDRA_EXTENSION_REPO_LINK`: The link to repo of ghidra extension to clone. The script will clone the repo using `git clone`.
 
 If there is no link supplied, the script will check inside current folder to find Ghidra root directory, also Extension root directory. Then it will fire up a container and build the extension based on supplied Ghidra version.
 
